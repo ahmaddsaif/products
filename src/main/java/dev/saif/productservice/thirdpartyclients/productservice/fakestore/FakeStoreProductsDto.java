@@ -1,4 +1,4 @@
-package dev.saif.productservice.dtos;
+package dev.saif.productservice.thirdpartyclients.productservice.fakestore;
 
 import lombok.Getter;
 import lombok.Setter;

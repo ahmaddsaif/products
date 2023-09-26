@@ -1,9 +1,7 @@
 package dev.saif.productservice.services;
-import dev.saif.productservice.dtos.FakeStoreProductDto;
-import dev.saif.productservice.dtos.FakeStoreProductsDto;
+import dev.saif.productservice.thirdpartyclients.productservice.fakestore.FakeStoreProductDto;
 import dev.saif.productservice.dtos.GenericProductDto;
 import dev.saif.productservice.exceptions.NotFoundException;
-import dev.saif.productservice.models.Product;
 
 import java.util.ArrayList;
 

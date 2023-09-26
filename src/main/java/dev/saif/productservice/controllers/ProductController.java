@@ -1,24 +1,21 @@
 package dev.saif.productservice.controllers;
 
-import dev.saif.productservice.dtos.ExceptionDto;
-import dev.saif.productservice.dtos.FakeStoreProductDto;
+import dev.saif.productservice.thirdpartyclients.productservice.fakestore.FakeStoreProductDto;
 import dev.saif.productservice.dtos.GenericProductDto;
 import dev.saif.productservice.exceptions.NotFoundException;
-import dev.saif.productservice.models.Product;
 import dev.saif.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.NotDirectoryException;
 import java.util.ArrayList;
 
 @RestController()
 @RequestMapping("/products")
 public class ProductController {
     ProductService productService;
-    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService) {
+    public ProductController(ProductService productService) {
         this.productService = productService;
     }
     @GetMapping()
