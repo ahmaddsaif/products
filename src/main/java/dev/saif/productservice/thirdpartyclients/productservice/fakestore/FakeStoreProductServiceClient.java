@@ -18,20 +18,26 @@ import java.util.Objects;
 @Service
 public class FakeStoreProductServiceClient {
     private RestTemplateBuilder restTemplateBuilder;
-    public FakeStoreProductServiceClient(RestTemplateBuilder restTemplateBuilder) {
+
+    // This could not resolve the name from config, so not working, hence commenting,
+    // using via constructor instead
+//    @Value("${fakeStore.base.url}")
+//    private String fakeStoreBaseUrl = "https://dummyjson.com";
+//
+//    @Value("${fakeStore.products}")
+//    private String fakeStoreProducts = "/products";
+
+    String productByIdUrl;
+    String getAllProductsUrl;
+    String createProductUrl;
+    public FakeStoreProductServiceClient(RestTemplateBuilder restTemplateBuilder,
+                                         @Value("${fakeStore.base.url}") String fakeStoreBaseUrl,
+                                         @Value("${fakeStore.products}") String fakeStoreProducts) {
         this.restTemplateBuilder = restTemplateBuilder;
+        this.productByIdUrl = fakeStoreBaseUrl + fakeStoreProducts + "/{id}";
+        this.getAllProductsUrl = fakeStoreBaseUrl + fakeStoreProducts;
+        this.createProductUrl = fakeStoreBaseUrl + fakeStoreProducts + "/add";
     }
-
-    @Value("${fakeStore.base.url}")
-    private String fakeStoreBaseUrl = "https://dummyjson.com";
-
-    @Setter
-    @Value("${fakeStore.products}")
-    private String fakeStoreProducts = "/products";
-
-    String productByIdUrl = fakeStoreBaseUrl + fakeStoreProducts + "/{id}";
-    String getAllProductsUrl = fakeStoreBaseUrl + fakeStoreProducts;
-    String createProductUrl = fakeStoreBaseUrl + fakeStoreProducts + "/add";
     public FakeStoreProductDto getProductById(Long id) throws NotFoundException {
         try {
             RestTemplate restTemplate = restTemplateBuilder.build();
