@@ -1,5 +1,4 @@
-package dev.saif.productservice.models;
-import jakarta.persistence.Column;
+package dev.saif.productservice.inheritanceStrategies.tablePerClass;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
@@ -9,8 +8,8 @@ import java.util.List;
 
 @Getter
 @Setter
-@Entity
-public class Category extends BaseModel{
+@Entity(name = "tpc_category")
+public class Category extends BaseModel {
     private String name;
     @OneToMany(fetch = jakarta.persistence.FetchType.EAGER, mappedBy = "category")
     private List<Product> products;
