@@ -1,17 +1,22 @@
 package dev.saif.productservice.services;
+import dev.saif.productservice.dtos.ProductDto;
 import dev.saif.productservice.thirdpartyclients.productservice.fakestore.FakeStoreProductDto;
 import dev.saif.productservice.dtos.GenericProductDto;
 import dev.saif.productservice.exceptions.NotFoundException;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public interface ProductService {
-    public GenericProductDto getProductById(Long id) throws NotFoundException;
+    public ProductDto getProductById(UUID id) throws NotFoundException;
 
-    public ArrayList<GenericProductDto> getProducts();
+    public List<ProductDto> getProducts();
 
-    public FakeStoreProductDto createProduct(GenericProductDto genericProductDto);
+    public ProductDto createProduct(ProductDto productDto);
 
-    public GenericProductDto updateProduct(GenericProductDto genericProductDto, Long id);
-    public FakeStoreProductDto deleteProduct(Long id);
+    public ProductDto updateProduct(ProductDto productDto, UUID id) throws NotFoundException;
+    public ProductDto deleteProduct(UUID id) throws NotFoundException;
+
+    public List<ProductDto> getProductsByCategory(String categoryName);
 }

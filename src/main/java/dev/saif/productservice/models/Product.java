@@ -1,18 +1,26 @@
 package dev.saif.productservice.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
-@Entity
+import java.util.UUID;
+
+@Entity(name = "product")
 @Getter
 @Setter
-public class Product extends BaseModel {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Product {
+    @Id
+    @GeneratedValue(generator = "uuidgenerator")
+    @GenericGenerator(name = "uuidgenerator", strategy = "uuid2")
+    @Column(name = "id", columnDefinition = "binary(16)", nullable = false, updatable = false)
+    private UUID id;
     private String title;
     private String description;
     private String image;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Category category;
     private double price;
 }

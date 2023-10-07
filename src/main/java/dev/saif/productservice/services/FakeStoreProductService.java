@@ -17,16 +17,16 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.UUID;
 
-@Primary
 @Service("fakeStoreProductService")
-public class FakeStoreProductService implements ProductService{
+public class FakeStoreProductService{//} implements ProductService{
     private FakeStoreProductServiceClient fakeStoreProductServiceClient;
     public FakeStoreProductService(FakeStoreProductServiceClient fakeStoreProductServiceClient) {
         this.fakeStoreProductServiceClient = fakeStoreProductServiceClient;
     }
-    @Override
-    public GenericProductDto getProductById(Long id) throws NotFoundException {
+//    @Override
+    public GenericProductDto getProductById(UUID id) throws NotFoundException {
         try {
             return convertToGenericProductDto(fakeStoreProductServiceClient.getProductById(id));
         } catch (RestClientException e) {
@@ -36,7 +36,7 @@ public class FakeStoreProductService implements ProductService{
         }
     }
 
-    @Override
+//    @Override
     public ArrayList<GenericProductDto> getProducts() {
         FakeStoreProductsDto fakeStoreProductsDto = fakeStoreProductServiceClient.getProducts();
 
@@ -48,12 +48,12 @@ public class FakeStoreProductService implements ProductService{
         return products;
     }
 
-    @Override
-    public FakeStoreProductDto createProduct(GenericProductDto product) {
-        return fakeStoreProductServiceClient.createProduct(convertToFakeStoreProductDto(product));
+//    @Override
+    public GenericProductDto createProduct(GenericProductDto product) {
+        return convertToGenericProductDto(fakeStoreProductServiceClient.createProduct(convertToFakeStoreProductDto(product)));
     }
 
-    @Override
+//    @Override
     public GenericProductDto updateProduct(GenericProductDto genericProductDto, Long id) {
         return convertToGenericProductDto(
                 fakeStoreProductServiceClient.updateProduct(
@@ -61,9 +61,9 @@ public class FakeStoreProductService implements ProductService{
                 ));
     }
 
-    @Override
-    public FakeStoreProductDto deleteProduct(Long id) {
-        return fakeStoreProductServiceClient.deleteProduct(id);
+//    @Override
+    public GenericProductDto deleteProduct(Long id) {
+        return convertToGenericProductDto(fakeStoreProductServiceClient.deleteProduct(id));
     }
 
     public GenericProductDto convertToGenericProductDto(FakeStoreProductDto fakeStoreProductDto) {

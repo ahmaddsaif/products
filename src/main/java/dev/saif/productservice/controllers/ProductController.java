@@ -1,5 +1,8 @@
 package dev.saif.productservice.controllers;
 
+import dev.saif.productservice.dtos.ProductDto;
+import dev.saif.productservice.models.Product;
+import dev.saif.productservice.services.SelfProductService;
 import dev.saif.productservice.thirdpartyclients.productservice.fakestore.FakeStoreProductDto;
 import dev.saif.productservice.dtos.GenericProductDto;
 import dev.saif.productservice.exceptions.NotFoundException;
@@ -10,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @RestController()
 @RequestMapping("/products")
@@ -19,25 +24,29 @@ public class ProductController {
         this.productService = productService;
     }
     @GetMapping()
-    public ArrayList<GenericProductDto> getAllProducts() {
+    public List<ProductDto> getAllProducts() {
         return productService.getProducts();
     }
     @GetMapping("/{id}")
-    public ResponseEntity<GenericProductDto> getProductById(@PathVariable("id") Long id) throws NotFoundException {
+    public ResponseEntity<ProductDto> getProductById(@PathVariable("id") UUID id) throws NotFoundException {
         return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
 //        return productService.getProductById(id);
     }
     @DeleteMapping("{id}")
-    public FakeStoreProductDto deleteProductById(@PathVariable("id") Long id){
+    public ProductDto deleteProductById(@PathVariable("id") UUID id) throws NotFoundException {
         return productService.deleteProduct(id);
     }
     @PostMapping()
-    public FakeStoreProductDto createProduct(@RequestBody GenericProductDto product){
+    public ProductDto createProduct(@RequestBody ProductDto product){
         return productService.createProduct(product);
     }
     @PutMapping("{id}")
-    public GenericProductDto updateProductById(@RequestBody GenericProductDto genericProductDto, @PathVariable("id") Long id){
-        return productService.updateProduct(genericProductDto, id);
+    public ProductDto updateProductById(@RequestBody ProductDto productDto, @PathVariable("id") UUID id) throws NotFoundException{
+        return productService.updateProduct(productDto, id);
+    }
 
+    @GetMapping("/getByCategory/{categoryName}")
+    public List<ProductDto> getProductsByCategory(@PathVariable("categoryName") String categoryName) {
+        return productService.getProductsByCategory(categoryName);
     }
 }

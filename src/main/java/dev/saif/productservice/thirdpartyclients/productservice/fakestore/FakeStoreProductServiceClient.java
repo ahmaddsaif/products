@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 public class FakeStoreProductServiceClient {
@@ -38,7 +39,7 @@ public class FakeStoreProductServiceClient {
         this.getAllProductsUrl = fakeStoreBaseUrl + fakeStoreProducts;
         this.createProductUrl = fakeStoreBaseUrl + fakeStoreProducts + "/add";
     }
-    public FakeStoreProductDto getProductById(Long id) throws NotFoundException {
+    public FakeStoreProductDto getProductById(UUID id) throws NotFoundException {
         try {
             RestTemplate restTemplate = restTemplateBuilder.build();
             ResponseEntity<FakeStoreProductDto> response =
